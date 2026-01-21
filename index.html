@@ -40,11 +40,43 @@
         .nav-link { transition: all 0.3s ease; padding: 6px 20px; border-radius: 9999px; border: 1px solid rgba(57, 197, 187, 0.6); color: #ffffff; background: rgba(57, 197, 187, 0.15); font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
         .nav-link:hover { color: white !important; border-color: var(--pink) !important; box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
 
-        /* --- GALLERY --- */
-        .gallery-container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .gallery-item { width: 100%; margin-bottom: 40px; border-radius: 12px; overflow: hidden; background: var(--glass); border: 1px solid var(--border); transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer; }
-        .gallery-item:hover { transform: scale(1.02); border-color: var(--miku); }
-        .gallery-item img { width: 100%; height: auto; display: block; -webkit-user-drag: none; user-select: none; transition: filter 0.3s; }
+        /* --- GALLERY (ĐÃ CHỈNH SỬA THÀNH 4 CỘT) --- */
+        .gallery-container { 
+            width: 100%; 
+            max-width: 1400px; /* Tăng độ rộng tổng thể để 4 ảnh không bị quá bé */
+            margin: 0 auto; 
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr)); /* Mặc định 1 cột cho Mobile */
+            gap: 20px; /* Khoảng cách giữa các ảnh */
+        }
+
+        /* Tablet: 2 cột */
+        @media (min-width: 640px) {
+            .gallery-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* Desktop: 4 cột */
+        @media (min-width: 1024px) {
+            .gallery-container {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        .gallery-item { 
+            width: 100%; 
+            aspect-ratio: 16/9; /* Giữ các khung hình đều nhau (có thể chỉnh thành 1/1 nếu muốn hình vuông) */
+            border-radius: 12px; 
+            overflow: hidden; 
+            background: var(--glass); 
+            border: 1px solid var(--border); 
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            cursor: pointer; 
+        }
+        .gallery-item:hover { transform: scale(1.05); border-color: var(--miku); z-index: 10; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; transition: filter 0.3s; }
         .gallery-item:hover img { filter: brightness(0.8); }
         
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
@@ -66,7 +98,6 @@
             position: fixed; z-index: 999999; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(15px); padding: 20px; transition: all 0.3s ease;
-            /* Khôi phục con trỏ chuột mặc định khi vào khu vực lightbox */
             cursor: default !important;
         }
         .video-wrapper { 
@@ -142,7 +173,11 @@
             <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 2"></div>
             <div class="gallery-item reveal"><img src="thumbnail iron man 46.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 3"></div>
             <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 4"></div>
-            </div>
+            <div class="gallery-item reveal"><img src="thumbnail Iron man 6 suit-up gantry.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 5"></div>
+            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 6"></div>
+            <div class="gallery-item reveal"><img src="thumbnail iron man 46.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 7"></div>
+            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 8"></div>
+        </div>
 
         <footer id="contact" class="w-full py-20 text-center border-t border-[#39c5bb]/10 mt-20 reveal">
             <h3 class="text-2xl font-black mb-12 contact-title-gradient italic">Let's work together</h3>
@@ -219,7 +254,6 @@
                     lightboxVideo.src = newSrc;
                     lightbox.style.display = 'flex';
                     
-                    // Hiện lại con trỏ chuột hệ thống và ẩn con trỏ custom khi mở video
                     document.body.style.cursor = 'default';
                     cursor.style.display = 'none';
                     document.body.style.overflow = 'hidden';
@@ -236,8 +270,6 @@
             setTimeout(() => {
                 lightbox.style.display = 'none';
                 lightboxVideo.src = ""; 
-                
-                // Khôi phục lại trạng thái ẩn chuột hệ thống và hiện chuột custom
                 document.body.style.cursor = 'none';
                 cursor.style.display = 'block';
                 document.body.style.overflow = 'auto';
@@ -250,10 +282,8 @@
             closeLightbox();
         });
 
-        // Anti-copy
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('dragstart', e => { if (e.target.nodeName === 'IMG') e.preventDefault(); });
     </script>
 </body>
 </html>
-
