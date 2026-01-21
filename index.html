@@ -25,6 +25,31 @@
             cursor: none !important;
         }
 
+/* --- CATEGORY HEADER --- */
+.category-header {
+    grid-column: 1 / -1; /* Ép tiêu đề luôn chiếm hết chiều ngang của lưới 4 cột */
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.category-header h2 {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--miku);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+}
+
+.category-line {
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(57, 197, 187, 0.5), transparent);
+}
+
         /* --- LOADER --- */
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050a09; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
         #loader.hidden { opacity: 0; pointer-events: none; visibility: hidden; }
@@ -169,15 +194,23 @@
         </header>
 
         <div class="gallery-container">
-            <div class="gallery-item reveal"><img src="thumbnail Iron man 6 suit-up gantry.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 1"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 2"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 46.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 3"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 4"></div>
-            <div class="gallery-item reveal"><img src="thumbnail Iron man 6 suit-up gantry.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 5"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 6"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 46.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 7"></div>
-            <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="https://www.youtube.com/embed/UXbS2BVN5HE?si=iTHlmWNtNSd8wQV3" alt="Project 8"></div>
-        </div>
+    <div class="category-header reveal">
+        <h2>01. Package design project</h2>
+        <div class="category-line"></div>
+    </div>
+    
+    <div class="gallery-item reveal"><img src="thumbnail Iron man 6 suit-up gantry.png" data-video="..." alt="P1"></div>
+    <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="..." alt="P2"></div>
+    <div class="gallery-item reveal"><img src="thumbnail iron man 46.png" data-video="..." alt="P3"></div>
+    <div class="gallery-item reveal"><img src="thumbnail iron man 5.png" data-video="..." alt="P4"></div>
+
+    <div class="category-header reveal">
+        <h2>02. Branding Identity</h2>
+        <div class="category-line"></div>
+    </div>
+
+    <div class="gallery-item reveal"><img src="thumbnail doraemon 700.png" data-video="..." alt="P5"></div>
+    </div>
 
         <footer id="contact" class="w-full py-20 text-center border-t border-[#39c5bb]/10 mt-20 reveal">
             <h3 class="text-2xl font-black mb-12 contact-title-gradient italic">Let's work together</h3>
