@@ -66,6 +66,8 @@
             position: fixed; z-index: 999999; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center;
             backdrop-filter: blur(15px); padding: 20px; transition: all 0.3s ease;
+            /* Khôi phục con trỏ chuột mặc định khi vào khu vực lightbox */
+            cursor: default !important;
         }
         .video-wrapper { 
             width: 100%; max-width: 1000px; aspect-ratio: 16/9; position: relative; 
@@ -73,8 +75,8 @@
             border: 1px solid rgba(255,255,255,0.1); transform: scale(0.9); opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .video-wrapper.active { transform: scale(1); opacity: 1; }
-        #lightbox-video { width: 100%; height: 100%; }
-        #close-video { position: absolute; top: -45px; right: 0; color: white; cursor: pointer; font-size: 14px; font-weight: bold; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; }
+        #lightbox-video { width: 100%; height: 100%; cursor: auto !important; }
+        #close-video { position: absolute; top: -45px; right: 0; color: white; cursor: pointer !important; font-size: 14px; font-weight: bold; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; z-index: 10; }
         #close-video:hover { opacity: 1; color: var(--miku); }
 
         /* --- CONTACT & FOOTER --- */
@@ -175,7 +177,10 @@
 
         // Cursor
         const cursor = document.getElementById('cursor-follower');
-        document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+        document.addEventListener('mousemove', (e) => { 
+            cursor.style.left = e.clientX + 'px'; 
+            cursor.style.top = e.clientY + 'px'; 
+        });
 
         // Loader
         let lp = 0; const li = setInterval(() => { 
@@ -196,7 +201,7 @@
         });
         btt.onclick = (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // --- YOUTUBE LIGHTBOX LOGIC (FIXED) ---
+        // --- YOUTUBE LIGHTBOX LOGIC ---
         const lightbox = document.getElementById('lightbox');
         const lightboxVideo = document.getElementById('lightbox-video');
         const videoWrapper = document.getElementById('video-wrapper');
@@ -207,14 +212,16 @@
                 let videoSrc = img.getAttribute('data-video');
                 
                 if (videoSrc && videoSrc !== "") {
-                    // Tách các tham số hiện có của link để tránh trùng lặp dấu ?
-                    // Sửa lỗi 153: Thêm origin và các tham số API cần thiết
                     const origin = window.location.origin;
                     const cleanLink = videoSrc.split('?')[0];
                     const newSrc = `${cleanLink}?autoplay=1&rel=0&enablejsapi=1&origin=${origin}`;
                     
                     lightboxVideo.src = newSrc;
                     lightbox.style.display = 'flex';
+                    
+                    // Hiện lại con trỏ chuột hệ thống và ẩn con trỏ custom khi mở video
+                    document.body.style.cursor = 'default';
+                    cursor.style.display = 'none';
                     document.body.style.overflow = 'hidden';
                     
                     setTimeout(() => {
@@ -228,7 +235,11 @@
             videoWrapper.classList.remove('active');
             setTimeout(() => {
                 lightbox.style.display = 'none';
-                lightboxVideo.src = ""; // Dừng video hoàn toàn
+                lightboxVideo.src = ""; 
+                
+                // Khôi phục lại trạng thái ẩn chuột hệ thống và hiện chuột custom
+                document.body.style.cursor = 'none';
+                cursor.style.display = 'block';
                 document.body.style.overflow = 'auto';
             }, 300);
         }
